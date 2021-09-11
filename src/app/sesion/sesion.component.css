@@ -1,0 +1,39 @@
+body {
+	background-color: black;
+}
+.ses-frm {
+	margin: 0px;
+	max-width: 500px;
+	padding: 0px;
+	width: 100%;
+	background-color: black;
+}
+
+.ses-frm img {
+	margin-top: 0.5rem;
+	margin-bottom: 0.3rem;
+}
+
+.ses-frm div {
+	width: 100%;
+	padding-left: 0.3rem;
+	padding-right: 0.3rem;
+}
+
+.ses-frm div label {
+	color: white;
+}
+
+.ses-frm div input {
+	margin-bottom: 0.3rem;
+	width: 100%;
+	border-radius: 1rem;
+	border-color: grey;
+}
+
+.ses-frm button {
+	margin: 1rem;
+	background-color: red;
+	border-radius: 0.75rem;
+	color: white
+}

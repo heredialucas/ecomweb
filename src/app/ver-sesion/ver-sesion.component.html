@@ -1,0 +1,39 @@
+<div>
+	<dp-date-picker 
+		theme="dp-material" 
+		placeholder="ingrese fecha" 
+		required="true"
+		[(ngModel)]="fechaDesde" 
+		[config]="desdePickerConfig" 
+		[displayDate]="'01/01/2019'"
+		minDate="07/11/1900">
+ </dp-date-picker>
+</div>
+
+<div>
+	<dp-date-picker 
+		dir="rtl" 
+		theme="dp-material" 
+		placeholder="ingrese fecha" 
+		required="true"
+		[(ngModel)]="fechaHasta" 
+		[config]="desdePickerConfig" 
+		[displayDate]="'24/08/2020'"
+		minDate="07/11/1900">
+ </dp-date-picker>
+</div>
+
+<!-- 
+		[displayDate]="'24/08/2020'"
+
+-->
+
+<pre>
+	{{this.variables}}
+</pre>
+<h3>
+	{{this.fechaDesde}}
+</h3>
+<h3>
+	{{this.fechaHasta}}
+</h3>

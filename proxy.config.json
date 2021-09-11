@@ -1,0 +1,8 @@
+{
+  "/api/*": {
+    "target": "http://lab.antoniolabruna.com.ar",
+		"secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true		
+  }
+}

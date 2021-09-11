@@ -1,0 +1,178 @@
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+/* You can add global styles to this file, and also import other style files */
+.Tit {
+	background-color: #8b2429;
+	color: white;
+  line-height: 1rem;
+	padding: 0.2rem 0.1rem;
+}
+
+.Tit div h1 {
+	// color: rgb(213,224,255);	
+	padding-left: 1.8rem;
+	margin: 0px;
+}
+
+.Tit div h2 {
+	// color: rgb(213,224,255);	
+	padding-left: 0.2rem;
+	margin: 0px;
+}
+
+.TitIconoDerecha {
+  line-height: 1rem;
+  //color: rgb(255,255,255);
+  font-weight: bold;
+	//font-size: 1rem;
+	//padding-right: 0.5rem;
+}
+
+.TitIconoIzquierda {
+  line-height: 1rem;
+  //color: rgb(255,255,255);
+  font-weight: bold;
+	//font-size: 1rem;
+	//padding-right: 0.5rem;
+}
+
+.Tit form {
+	margin: 0.2rem 0.1rem;
+}
+
+.BusqInput {
+	border-radius: 1rem;
+}
+
+.BusqInput:focus {
+	border-color: rgb(106, 231, 240);
+	border-width: 2px;
+  //-webkit-box-shadow: none;
+	//box-shadow: none;		
+	
+	//outline-color: red;
+}
+
+.BusqBoton {
+	color: rgb(196, 219, 223);
+}
+
+.BusqBoton:hover {
+	color: white;
+	background-color: #80afd8;
+	border-color: #d3dae0;
+}
+
+.BusqLeyenda {
+	background-color: #6c757d;
+	color: white;
+	padding-left: 0.5rem;
+}
+
+.ListaItemIconoAgregar {
+  line-height: 40px;
+  font-size: 32px;
+  color: rgb(20,123,198);
+}
+
+
+html, body { height: 100%; }
+/*
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+*/
+
+.btn-accion {
+	background-color: #f73f3f;
+	color:white;
+	font-weight: bold;
+}
+
+.btn-accion:hover {
+	color:gold;
+}
+
+
+.btn-accion:disabled {
+	background-color: #d4c8c8;
+}
+
+
+.badge-codigo {
+	background-color: grey;
+}
+
+.badge-principal {
+	background-color: #382020;
+	color: white;
+}
+
+.badge-secundaria {
+	background-color: #694d4d;
+	color: white;
+}
+
+.icono {
+	color:#f37189
+}
+
+
+.tab-rotulo:visited {
+	color:crimson;
+}
+
+
+/*
+.nav-tabs .nav-item.show .nav-link, 
+*/
+.nav-tabs .nav-link {
+	color:crimson;
+}
+
+.nav-tabs .nav-link.active {
+	color:crimson;
+	font-weight : bold;
+}
+
+.nav-link:hover {
+	color:crimson;
+}
+
+.nav-pills .nav-link {
+	color:crimson;
+	border-radius: 0;
+	/* border-top: none; */
+	border-style: none;
+	border-width: thin;
+	padding-bottom: 2px;
+}
+
+.nav-pills .nav-link:hover {
+	/* border-top: none; */
+	border-bottom: #c2185b;
+	border-width: thin;
+	border-bottom-style: groove;	
+}
+
+.nav-pills .nav-link.active {
+	/* border-top: none; */
+	background-color: rgba(220, 20, 60, 0.349);
+}
+
+
+.Rubro {
+	background-color: #8b2429;
+	color: white;
+}
+

@@ -1,0 +1,174 @@
+<div  class="Tit" >
+	<div>
+		<span class="badge badge-pill badge-codigo">Código: {{this.art.codigo}}</span>
+		<h3 class="mr-1">{{this.art.descripcion}}</h3>
+	</div>
+
+	<div *ngIf="this.tra.esMostrable()">
+		<span>{{this.tra.mensaje}}</span>
+		<fa-icon *ngIf="this.tra.estaPreparando()" [icon]="['fas', 'spinner']" [spin]=true></fa-icon>
+	</div>
+</div>
+
+<form [formGroup]="frm" (ngSubmit)="this.agrArticulo()" class="art-frm">
+
+	<!-- Cantidad -->
+	<div class="d-flex flex-row justify-content-center">
+		<div class="d-flex flex-column align-items-start">
+			<div class="d-flex flex-row">
+				<button type="button" class="btn-mas"><fa-icon [icon]="['fas', 'minus-circle']" (click)="this.cantIncrementar(-1)"></fa-icon></button>
+				<h2>Cantidad</h2>
+				<button type="button" class="btn-menos"><fa-icon [icon]="['fas', 'plus-circle']" (click)="this.cantIncrementar(1)"></fa-icon></button>	
+			</div>
+			<input class="form-control" type="number" formControlName="cantidad" (focus)="$event.target.select()">
+		</div>
+		<button 
+			class="btn btn-accion btn-agregar" 
+			[disabled]="!this.esPedidoAbierto() || art.id==''"
+			[ngClass]= "{'btn-NoAgregar': !this.bAgregar}" 
+			type="submit">
+			{{this.bAgregar? "Agregar" : "Agregado"}}
+		</button>
+	</div>
+	
+	<!-- Como agregar -->
+	<!--
+	<div class="form-check">
+		<input class="form-check-input" type="radio" name="bAdicionar" id="opcAgregar1" value='1' checked formControlName="bAdicionar">
+		<label class="form-check-label" for="opcAgregar1">Si ya existe, adicionar esta cantidad</label>
+	</div>
+	<div class="form-check">
+		<input class="form-check-input" type="radio" name="bAdicionar" id="opcAgregar2" value='2' formControlName="bAdicionar">
+		<label class="form-check-label" for="opcAgregar2">Si ya existe, corregir con esta cantidad</label>
+	</div>
+	-->
+
+</form>
+
+<!-- Tabs Títulos -->
+<ul class="nav nav-tabs" id="artTab" role="tablist">
+	<li class="nav-item" role="presentation">
+		<a class="nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">
+			Info
+		</a>
+	</li>
+	<li class="nav-item" role="presentation">
+		<a class="nav-link" id="imagen-tab" data-toggle="tab" href="#imagen" role="tab" aria-controls="imagen" aria-selected="false">
+			Imagen
+		</a>
+	</li>
+</ul>
+
+<!-- Tabs Contenido -->
+<div>
+	<div class="tab-content" id="artTabContent">
+		<div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+			<div class="d-flex flex-wrap justify-content-center">
+				<div class="mr-1" style="min-width: 320px;">
+					<h5 class="pb-0">Precios <small>- IVA {{this.art.iva | number :"1.2-2"}}%</small></h5>	
+					<div 
+						*ngFor="let item of this.art.aPrecio"
+						class="d-flex flex-column"
+						>
+						<div class="d-flex flex-column">
+							{{item.obtNombreLista()}}
+							<div class="d-flex flex-row align-items-center">
+								<span class="badge badge-principal mr-1" style="font-size: 1.6em; margin-top:0.3em">$ {{ item.obtPrecioConIVA(this.art.iva) | number :"1.2-2"}}</span>
+								<div class="d-flex flex-column align-items-center">						
+									<small>sin IVA</small>
+									<span class="badge badge-secundaria badge-pill ml-2 mr-1">{{ item.monto | number :"1.2-2"}}</span>
+								</div>
+								<span class="badge badge-precio-mas mr-1 mt-3">+</span>
+								<div class="d-flex flex-column align-items-center">
+									<small class="align-items-center">IVA</small>
+									<span class="badge badge-secundaria badge-pill mr-1">{{ item.obtIvaMonto(this.art.iva) | number :"1.2-2"}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="!this.esViajante()" class="ml-1" style="min-width: 320px;">
+					<h5 class="pb-0">Almacén - Stock</h5>
+					<div class="d-flex flex-row align-items-center">
+						<img class="m-2" src="/assets/img/AlmacenDeArticulos.png" width="30%"/>
+						<span *ngIf="this.obtStock()>=10" class="badge badge-secundaria mr-2">Hay Stock</span>
+						<span *ngIf="0< this.obtStock() && this.obtStock()<10" class="badge badge-secundaria mr-2">Poco Stock</span>
+						<span *ngIf="this.obtStock()==0" class="badge badge-secundaria mr-2">Sin Stock</span>
+					</div>
+					<!--
+					<li class="list-group-item d-flex justify-content-between art-recuadro-item"
+						*ngFor="let item of this.art.aStock" >
+						<span class="text-center ml-2">{{item.deposito}}</span>
+						<span class="badge badge-secundaria mr-2">{{item.cantidad}}</span>
+					</li>
+					-->
+				</div>
+				<div *ngIf="this.esViajante()" class="ml-1" style="min-width: 320px;">
+					<h5 class="pb-0 w100">Almacén - Stock: <span class="badge badge-principal">{{ this.obtStock() }}</span></h5>
+					<li class="list-group-item d-flex justify-content-between art-recuadro-item"
+					*ngFor="let item of this.art.aStock" >
+						<span class="text-center ml-2">{{item.deposito}}</span>
+						<span class="badge badge-secundaria mr-2">{{item.cantidad}}</span>
+					</li>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane fade" id="imagen" role="tabpanel" aria-labelledby="imagen-tab">
+			Proximamente :)
+		</div>
+	</div>
+</div>
+
+<!--
+		<div class="input-group mb-1">
+			<div class="input-group-prepend">
+				<h5 class="input-group-text" style="width:100px">De Lista</h5>
+				<h5 class="input-group-text">$</h5>
+			</div>
+			<div class="form-control">
+				<span class="badge badge-info ml-1 mr-1" style="font-size: large;">{{ this.obtPrecioConIVA() | number :"1.2-2"}}</span>
+				<span class="badge badge-secondary badge-pill ml-2 mr-1">{{ this.obtPrecio() | number :"1.2-2"}}</span>
+				<span class="badge badge-secondary badge-pill mr-1">+{{ this.obtIVA() | number :"1.2-2"}} (iva {{this.art.iva | number :"1.2-2"}}%)</span>
+			</div>
+		</div>
+		<div class="input-group mb-1">
+			<div class="input-group-prepend">
+				<h5 class="input-group-text"style="width:100px">Catálogo</h5>
+				<h5 class="input-group-text">$</h5>
+			</div>
+			<div class="form-control">
+				{{ this.obtPrecioConIVA() | number :"1.2-2"}}
+				<span class="badge badge-primary ml-2 mr-1">{{ this.obtPrecio() | number :"1.2-2"}}</span>
+				<span class="badge badge-primary mr-1">+{{ this.obtIVA() | number :"1.2-2"}} (iva {{this.art.iva | number :"1.2-2"}}%)</span>
+			</div>
+		</div>
+-->
+<!--
+<div class="d-flex align-items-start">
+	<ul class="list-group art-recuadro">
+		<li class="list-group-item d-flex align-items-center art-recuadro-tit">
+			<fa-icon [icon]="['fas', 'dollar-sign']" class="art-recuadro-tit-icono"></fa-icon>
+			<div class="art-recuadro-tit-texto"><span class="pl-3">{{ this.obtPrecioConIVA() | number :"1.2-2"}}</span></div>
+		</li>
+		<li class="list-group-item d-flex align-items-center art-recuadro-item">
+			<span class="text-center flex-fill">Precio</span><span class="badge badge-primary">{{ this.obtPrecio() | number :"1.2-2"}}</span>
+		</li>
+		<li class="list-group-item d-flex align-items-center art-recuadro-item">
+			<span class="text-center flex-fill">+IVA ({{this.art.iva | number :"1.2-2"}}%)</span><span class="badge badge-primary">{{ this.obtIVA() | number :"1.2-2"}}</span>
+		</li>
+	</ul>
+	<ul class="list-group art-recuadro">
+		<li class="list-group-item d-flex align-items-center art-recuadro-tit">
+			<fa-icon [icon]="['fas', 'hashtag']" class="art-recuadro-tit-icono"></fa-icon>
+			<div class="art-recuadro-tit-texto border rounded-0 border-primary shadow-none">
+				<span class="pl-3">{{ this.obtStock() }}</span>
+			</div>
+		</li>
+		<li class="list-group-item d-flex align-items-center art-recuadro-item"
+		*ngFor="let item of this.art.aStock" >
+			<span class="text-center flex-fill" style="padding-right: 5px;">{{item.deposito}}</span>
+			<span class="badge badge-primary">{{item.cantidad}}</span>
+		</li>
+	</ul>
+</div>
+-->

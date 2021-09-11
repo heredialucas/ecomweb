@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>
+	<div class="d-inline" style="color:green">
+		<fa-icon [icon]="['fas', 'question-circle']"></fa-icon>
+	</div>
+	{{this.titulo}}
+</h2>
+<mat-dialog-content>
+	{{this.mensaje}}
+</mat-dialog-content>
+<mat-dialog-actions>
+	<button mat-button 
+		*ngFor="let boton of this.aBoton"
+		[mat-dialog-close]="boton"
+		>
+		{{boton}}
+	</button>
+	<!--
+	<button mat-button [mat-dialog-close]="'Si'">Si</button>
+	<button mat-button [mat-dialog-close]="'No'" cdkFocusInitial>No</button>
+	-->
+</mat-dialog-actions>

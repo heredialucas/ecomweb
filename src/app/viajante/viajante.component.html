@@ -1,0 +1,176 @@
+<div class="Tit">
+	<div class="card-title-sm art-tit-contenedor">
+		<span class="badge badge-pill badge-secundaria">Código: {{this.via.codigo}}</span>
+		<h3>{{this.via.nombre}}</h3>	
+	</div>
+</div>
+<!-- Tab Títulos -->
+<ul class="nav nav-tabs mt-1" id="tabViaTitulos" role="tablist">
+	<li class="nav-item" role="presentation">
+		<a class="nav-link tab-rotulo active" id="home-tab" data-toggle="tab" href="#masdatos" role="tab" aria-controls="home" aria-selected="true">Más Datos</a>
+	</li>
+	<li class="nav-item" role="presentation">
+		<a class="nav-link tab-rotulo" id="pedidos-tab" data-toggle="tab" href="#pedidos" role="tab" aria-controls="profile" aria-selected="false">Pedidos</a>
+	</li>
+	<li class="nav-item" role="presentation">
+		<a class="nav-link tab-rotulo" id="doc-tab" data-toggle="tab" href="#doc" role="tab">Documentos</a>
+	</li>
+	<li class="nav-item" role="presentation">
+		<a class="nav-link tab-rotulo" id="status-tab" data-toggle="tab" href="#status" role="tab">Status</a>
+	</li>
+</ul>
+
+<div class="tab-content" id="tabViaMarco">
+	<!-- Tab: Mas Datos -->
+	<div class="tab-pane fade show active" id="masdatos" role="tabpanel" aria-labelledby="home-tab">
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item">
+				<fa-icon [icon]="['fas', 'tag']" class="icono"></fa-icon>
+				Código:
+			</li>
+			<li class="list-group-item">
+				<fa-icon [icon]="['fas', 'user']" class="icono"></fa-icon>
+				Nombre:
+			</li>
+			<li class="list-group-item">
+				<fa-icon [icon]="['fas', 'home']" class="icono"></fa-icon>
+				Domicilio:
+			</li>
+		</ul>
+	</div>
+	<!-- Tab: Pedido -->
+	<div class="tab-pane fade" id="pedidos" role="tabpanel" aria-labelledby="profile-tab">
+		<!-- Pedido: Form Filtro -->
+		<form [formGroup]="frm" (ngSubmit)="pedFiltrar()">
+			<a #conFilLeyenda class="p-0 m-0" type="button" data-toggle="collapse" data-target="#colPedidoFiltro">
+				<fa-icon [icon]="['fas', 'angle-down']"></fa-icon>
+				Mostrar filtro
+			</a>
+			<span *ngIf="this.traPed.esMostrable()"> : {{this.traPed.mensaje}}</span>
+			<fa-icon *ngIf="this.traPed.estaPreparando()" [icon]="['fas', 'spinner']" [spin]=true></fa-icon>
+			<div #colPedidoFiltro id="colPedidoFiltro" class="collapse" >
+				<div class="input-group mb-1">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Periodo</span>
+					</div>
+					<input class="mr-1" style="width:30%;" 
+						#fechaDesde formControlName="txtDesde" 
+						[dpDayPicker]="this.dayPickerConfig" 
+						[displayDate]="this.obtFiltroDesde()"
+						[theme]="'dp-material'"/> 
+					<input style="width:30%;" 
+						#fechaHasta formControlName="txtHasta" 
+						[dpDayPicker]="dayPickerConfig" 
+						[displayDate]="this.obtFiltroHasta()"
+						[theme]="'dp-material'"/> 
+				</div>
+				<div class="input-group mb-1">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Cliente</span>
+					</div>
+					<input formControlName="txtCliente" type="text"/> 
+				</div>
+				<div class="input-group mb-1">
+					<div class="input-group-prepend">
+						<span class="input-group-text" for="gruEstado">Estado</span>
+					</div>
+					<select id="gruEstado" formControlName="txtEstado">
+						<option value="-1" selected>Cualquier estado</option>
+						<option value="0">Abierto (en Confección)</option>
+						<option value="1">Enviado</option>
+					</select>
+				</div>
+				<button 
+					class="btn btn-accion mt-1 mr-2" 
+					type="submit" 
+					data-toggle="collapse" data-target="#colPedidoFiltro" 
+					>
+					Filtrar
+				</button>
+				<button 
+					class="btn btn-accion mt-1 mr-2" 
+					type="button" 
+					data-toggle="collapse" data-target="#colPedidoFiltro" 
+					>
+					Cancelar
+				</button>
+			</div> <!-- Collapse Pedido Filtro-->
+		</form>
+		<!-- Pedidos: Resultado del Filtro -->
+		<ul class="cebra list-group list-group-flush">
+			<li class="list-group-item d-inline-flex d-xl-flex align-items-center align-items-xl-center p-0" *ngFor="let iPed of this.pedLista">
+				<div class="d-inline btn-link mr-1" style="font-size:2.5rem" (click)="this.pedCargar(iPed.id)">
+					<fa-layers>
+						<fa-icon [icon]="['far', 'calendar']"></fa-icon>
+						<fa-layers-text content={{iPed.fecha.getDate()}} style="color: rgb(3, 41, 146);font-size:1rem;font-weight: bold"></fa-layers-text>
+						<fa-layers-text content={{iPed.obtPedidoMes()}} style="color: red;font-size:0.5rem; font-weight: bold" transform="down-22"></fa-layers-text>
+					</fa-layers>
+				</div>
+				<div class="d-inline flex-fill"  style="font-size:1rem;overflow:hidden;">
+					<div class="d-block border-bottom shadow-sm">{{iPed.cliente}}</div>
+					<div class="d-block"> 
+						{{iPed.articulos}} Arts - ${{iPed.monto | number :"1.2-2"}}
+					</div>
+				</div>
+				<div class="d-inline" style="width:20%">
+					<span class="badge badge-pill badge-principal">{{iPed.id}}
+					<fa-icon 
+						[icon]="iPed.estado==0 ? ['fas','pencil-alt'] : ['fas','paper-plane']">
+					</fa-icon>
+					</span>
+				</div>
+			</li>
+		</ul>
+	</div>
+
+	<!-- Tab: Documentos -->
+	<div class="tab-pane fade" id="doc" role="tabpanel" aria-labelledby="profile-tab">
+		<!-- Documento: Form Filtro -->
+		<form [formGroup]="frmDoc" (ngSubmit)="docFiltrar()">
+			<div class="input-group mb-1">
+				<div class="input-group-prepend">
+					<span class="input-group-text">Cliente</span>
+				</div>
+				<input formControlName="txtClienteDoc" placeholder="<Todos>" type="text"/> 
+				<button class="input-group-append btn btn-accion" type="submit">
+					<fa-icon [icon]="['fas', 'check']"></fa-icon>
+				</button>
+			</div>
+		</form>
+		<div *ngIf="this.traDoc.esMostrable()">
+			<span>{{this.traDoc.mensaje}}</span>
+			<fa-icon *ngIf="this.traDoc.estaPreparando()" [icon]="['fas', 'spinner']" [spin]=true></fa-icon>
+		</div>
+		<!-- Documento: Resultado del Filtro (Documento) -->
+		<ul class="cebra list-group list-group-flush">
+			<li class="list-group-item d-inline-flex d-xl-flex align-items-center align-items-xl-center p-0" *ngFor="let iDoc of this.docLista">
+				<!-- Fecha -->
+				<div class="d-inline btn-link mr-1" style="font-size:2.5rem" (click)="this.docCargar(iDoc)">
+					<fa-layers>
+						<fa-icon [icon]="['far', 'calendar']"></fa-icon>
+						<fa-layers-text content={{iDoc.fecha.getDate()}} style="color: rgb(3, 41, 146);font-size:1rem;font-weight: bold"></fa-layers-text>
+						<fa-layers-text content={{iDoc.obtDocMes()}} style="color: red;font-size:0.5rem; font-weight: bold" transform="down-22"></fa-layers-text>
+					</fa-layers>
+				</div>
+				<!-- Clientes y Montos-->
+				<div class="d-inline flex-fill"  style="font-size:1rem;padding-right: 3px;">
+					<div class="d-block">
+						<span class="badge badge-pill badge-secundaria">{{iDoc.obtNumeracion()}}</span>
+					</div>
+					<div class="d-block border-bottom">Cliente - {{iDoc.cliente}}</div>
+					<div class="progress" style="height:0.2rem; background-color: rgb(206, 77, 77);">
+						<div class="progress-bar" role="progressbar" [style.width]= "iDoc.obtPorcionPago()"></div>
+					</div>
+					<div class="d-block">
+						Total: ${{iDoc.total  | number :"1.2-2"}} - Saldo: ${{iDoc.saldo | number :"1.2-2"}}
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+
+	<!-- Tab: Status -->
+	<div class="tab-pane fade" id="status" role="tabpanel" aria-labelledby="profile-tab">
+		<div>{{this.data.obtStatus()}}</div>
+	</div>
+</div>

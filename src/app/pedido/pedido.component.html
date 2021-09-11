@@ -1,0 +1,164 @@
+<div class="Tit">
+  <div class="d-flex flex-row align-items-md-center py-1">
+		<h1 class="flex-fill">Pedido</h1>
+		<button class="btn btn-accion mr-1 BusqBoton" 
+			[disabled]="!this.esViajante()"
+			(click)="this.genNuevo()">
+			<fa-icon 
+				class="TitIconoDerecha align-items-end align-content-center align-self-center" 
+				[icon]="['fas', 'plus']"
+				>
+			</fa-icon>
+		</button>		
+  </div>
+</div>  
+
+<!-- Tabs -->
+<ul class="nav nav-tabs mt-1">
+  <li class="nav-item">
+    <a href="#cliente" class="nav-link active" data-toggle="tab">Cliente</a>
+  </li>
+  <li class="nav-item">
+    <a href="#arts" class="nav-link" data-toggle="tab">Artículos</a>
+  </li>
+  <li class="nav-item">
+    <a href="#confirmar" class="nav-link" data-toggle="tab">Confirmar</a>
+  </li>
+</ul>           
+<!-- Tab panes -->
+<div class="tab-content">
+		<!-- Cliente-->
+    <div class="tab-pane active" id="cliente">
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">
+					<fa-icon [icon]="['fas', 'tag']" class="icono"></fa-icon>
+					Código:{{this.obtCliCodigo()}}
+				</li>
+				<li class="list-group-item">
+					<fa-icon [icon]="['fas', 'user']" class="icono"></fa-icon>
+					Cliente:{{this.obtCliNombre()}}
+				</li>
+				<li class="list-group-item">
+					<fa-icon [icon]="['fas', 'home']" class="icono"></fa-icon>
+					Domicilio:{{this.obtCliDomicilio()}}
+				</li>
+			</ul>
+			<button *ngIf="this.esViajante()" class="btn btn-accion m-1" [disabled]= "!this.esPedidoAbierto()" [routerLink]="['/Clientes']">
+				Reemplazar
+				<fa-icon 
+					class="TitIconoDerecha align-items-end align-content-center align-self-center" 
+					[icon]="['fas', 'sync']"
+					>
+				</fa-icon>
+			</button>		
+    </div>
+		<!-- Articulos-->
+    <div class="tab-pane" id="arts">
+			<!-- No existen artículos-->
+			<div *ngIf="!this.hayArticulos()">
+				El pedido no contiene artículos!<br>
+				<a [routerLink]="['/Articulos']">Agréguelos desde aquí</a>
+			</div>
+      <!-- Hay artículos en el pedido-->
+      <ul class="cebra list-group mt-1" *ngIf="this.hayArticulos()">
+        <li class="PedidoItem list-group-item d-block align-items-center" id= {{item.id}}
+        *ngFor="let item of this.obtArticulos()"
+        >
+					<div class="d-flex align-items-center">
+						<div class="flex-grow-1 justify-content-around" [hidden]= "item.esOculto()">
+							<span class="badge badge-codigo">
+								<fa-icon 
+									*ngIf="this.esPedidoAbierto()" 
+									[styles]="{'color': 'white'}"
+									(click)="this.artQuitar(item.articuloId)"
+									[icon]="['fas', 'times-circle']"
+								>
+								</fa-icon>
+							{{item.codigo}}
+							</span>
+							<h6 class="PedidoItemDescripcion">{{item.descripcion}} </h6>
+						</div>
+						<div class="justify-content-around align-self-center" [hidden]= "item.esOculto()">
+							<span style="font-weight: bold;">$ {{item.obtPrecioTotal() | number:"1.2-2"}}</span>
+						</div>
+					</div>
+          <div [hidden]= "item.esOculto()">
+            <span class="PedidoItemEtiqueta badge Rubro">PU {{item.precio | number:"1.2-2"}}</span>
+            <span class="PedidoItemEtiqueta badge Rubro">
+              +{{item.obtIvaMonto() | number :"1.2-2"}} IVA ({{item.iva | number :"1.2-2"}}%)</span>
+            <span class="PedidoItemEtiqueta badge Rubro">x {{item.cantidad}} unid.</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+		<!-- Confirmar -->
+		<form class="tab-pane form-group" id="confirmar" style="padding-right: 2%;padding-left: 2%;" [formGroup]="frm" (ngSubmit)="registrar()">
+			<!-- Datos del Cliente -->
+      <small class="d-flex justify-content-end align-items-center" style="margin-right: 0px;">Pedido Nro {{this.obtPedId()}}</small>
+      <small>Cliente: {{this.obtCliCodigo()}}</small>
+      <h6>{{this.obtCliNombre()}}</h6>
+      <small>Viajante: {{this.obtViaCodigo()}}</small>
+      <h6>{{this.obtViaNombre()}}</h6>
+			<hr style="background-color: #b5d1e8;" />
+
+			<!-- Resumen Artículos -->
+			<div class="form-row">
+				<label for="txtArticulos" class="col-4">Artículos</label>
+				<div class="col-8">
+					<span class="form-control" id="txtArticulos">{{this.obtArtsResumenCantidad()}}</span>
+				</div>
+			</div>
+			<div class="form-row">
+				<label for="txtMonto" class="col-4">Monto</label>
+				<div class="col-8">
+					<span class="form-control" id="txtMonto">{{this.obtArtsResumenMonto() | number :"1.2-2"}}</span>
+				</div>
+			</div>
+			<!-- Fin: Resumen Artículos -->
+			<div class="form-row">
+				<label for="cboDeposito" class="col-4">Depósito</label>
+				<div class="col-8">
+					<select class="form-control" formControlName="txtDeposito" id="cboDeposito">
+						<option *ngFor="let item of this.aDeposito" value= {{item.id}}>{{item.nombre}}</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="col-4"></div>
+				<div class="form-check col-8">
+					<input class="mr-2" type="checkbox" formControlName="txtCerrar" id="gridCheck">
+					<label for="gridCheck">Cerrar Pedido</label>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="col-12">
+					<!--
+					<label for="exampleFormControlTextarea1">Observación</label>
+					-->
+					<textarea class="form-control" formControlName="txtObs" placeholder="Observación" rows="2"></textarea>					
+				</div>
+			</div>
+			<span class="form-row col">
+				{{this.mensRegistrado}}
+			</span>
+			<div class="d-flex justify-content-around align-items-center" style="background-color: #5a5a5a;padding-top: 5px;padding-right: 0px;padding-bottom: 3px;margin-top: 15px;">
+				<button 
+					class="btn btn-accion" type="submit" 
+					[disabled]= "this.esInvitado() || !this.esPedidoAbierto() || this.iRegistrando==1">
+					<fa-layers style="font-size: 1.5rem;">
+						<fa-icon [icon]= "['fas', 'save']" *ngIf="this.iRegistrando==0"></fa-icon>
+						<fa-icon [icon]="['fas', 'spinner']" *ngIf="this.iRegistrando==1" [spin]="true"></fa-icon>
+					</fa-layers> 
+					<span class="mr-1">Guardar</span>
+				</button>
+				<button class="btn btn-accion" [disabled]= "this.esInvitado() || !this.esPedidoAbierto()" (click)="this.deshacer()">
+					<fa-layers style="font-size: 1.5rem;">
+						<fa-icon [icon]="['fas', 'undo']" *ngIf="this.iRegistrando==0"></fa-icon>
+						<fa-icon [icon]="['fas', 'spinner']" *ngIf="this.iRegistrando==2" [spin]="true"></fa-icon>
+					</fa-layers> 					
+					<span class="ml-1">Deshacer</span>
+				</button>
+			</div>
+
+    </form>
+</div>

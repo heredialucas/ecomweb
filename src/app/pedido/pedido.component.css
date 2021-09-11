@@ -1,0 +1,99 @@
+/*** Estructura 
+
+Tab: Artículos
+ListGroup
+  ListItem: 2 div en filas
+    <div> 1ra fila - 2 columnas
+      <div> 2 filas (1er columna)
+        codigo <badge>
+        Descricion <h6>
+      <div> 1 fila (2da columan)
+        Precio <span>
+    <div> 2da fila, dispuesto en filas de badges
+      PU
+      IVA (sobre pu, iva y porcentaje)
+      Cantidad
+
+Tab: Confirmar
+<small> Nro de Pedido
+<samll> Cliente Nro
+<h6> Nombre del cliente
+<hr> linea
+<div> de 2 lineas
+  <div> dos columnas (1er fila)
+    Articulos (1er columna)
+    Cantidad (2da columna)
+  <div> dos columnas (2da fila)
+    Monto (1er columna)
+    $Monto (2da columna)
+<div> botones uno al lado del otro
+  Guardar
+  Enviar  
+***/
+
+/*** Titulo **/
+.Titulo {
+  background-color: #3244a2;
+}
+
+.TituloIcono {
+  line-height: 40px;
+  color: rgb(255,255,255);
+  font-weight: bold;
+  font-size: 28px;
+}
+
+.Titulo h1 {
+  color: rgb(213,224,255)
+}
+
+.TituloIconoAtras {
+  padding: 0px 5px;
+}
+
+.TituloIconoFiltro {
+  padding-right: 5px;
+}
+
+
+/*** List Group Item - Artículos ***/
+.PedidoItem {
+  padding: 2px 1px;
+}
+
+.PedidoItemDescripcion {
+  margin-bottom: 0px;
+  margin-right: 2px;
+  padding-right: 0px;
+}
+
+.PedidoItemEtiqueta {
+  margin-right: 2px;
+}
+
+/*** List Group Item - Confirmar ***/
+.PedidoBtn span {
+	margin-left:10px;
+}
+.PedidoBtn:hover {
+	background-color: rgba(41, 180, 223, 0.979);
+	border-color: rgb(54, 79, 133);
+}
+
+.form-row {
+	margin-bottom: 0.3rem;
+}
+
+.col-4 {
+	text-align: right;
+	margin: 0px;
+	padding: 6px;
+}
+
+.cebra .list-group-item:nth-child(odd) {
+  background: #f9e6ff;
+}
+
+.cebra .list-group-item:nth-child(even) {
+  background: rgb(255, 255, 255);
+}

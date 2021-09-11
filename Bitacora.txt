@@ -1,0 +1,14 @@
+2021-03-04
+* Cambiar apariencia de la aplicacion
+* Corrección en listado de visitas
+* Correccion fecha para visualar en Safari
+* Correcion Visitas: acceso denegado
+
+
+2021-02-02:
+* Sesión de Cliente, corrección en carga de Pedidos.
+* Sesión de Cliente, corrección en obtener Pedido.
+
+Anterior:
+* Geolocalización para visitas
+* Documentos, cuenta corriente de Clientes

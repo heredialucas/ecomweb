@@ -1,0 +1,143 @@
+.art-tit-contenedor {
+	background-color: #2a6a92;
+	padding-bottom: 5px;
+	margin-top: 0px;
+	padding-top: 5px;
+}
+
+.art-tit-contenedor span {
+	margin-right: 0px;
+	margin-left: 3px;
+}
+
+.art-tit-contenedor h3 {
+	color: #eeeeee;
+	filter: blur(0px) contrast(100%) grayscale(0%) hue-rotate(55deg) invert(0%) sepia(0%);
+	text-align: center;
+}
+
+.art-frm {
+	padding-top:0.7rem;
+	padding-bottom:0.3rem;
+}
+
+.art-frm ul {
+	margin: 0px 2px;	
+}
+
+.art-frm-etiqueta {
+	margin-right: 3px;
+}
+
+.art-frm-txt {
+	padding: 0px;
+}
+
+.art-frm-boton {
+	padding: 0px;
+}
+
+.art-recuadro {
+	padding: 0px;
+	width: 50%; 
+	padding-left: 1px;
+}
+
+.art-recuadro-tit {
+	background-color: rgb(124,178,228);
+	padding: 0px;
+}
+
+.art-recuadro-tit-icono{
+	width: 20%;
+	height: auto;
+	margin: auto;
+	padding: auto;
+	font-size: 20px;
+	margin-right: 3px;
+	font-weight: bold;
+}
+
+.art-recuadro-tit-texto{
+	width: 80%;
+	background-color: #fcfcfc;
+	margin: 2px;	
+}
+
+.art-recuadro-item {
+	padding: 1px 0px 1px 0px;
+}
+
+		
+.btn-NoAgregar {
+	background-color: green;
+	color: white;
+}
+
+.btn-agregar {
+	-webkit-transition-duration: 0.4s; /* Safari */
+	transition-duration: 0.4s;
+	margin-top: 1.5em;
+	margin-left: 0.3em;
+	text-decoration: none;
+	overflow: hidden;
+	cursor: pointer;
+	/*width: 100px;*/
+}
+
+.btn-agregar:after {
+  /*content: "";*/
+  background: #90EE90;
+  display: block;
+	position: absolute;
+	/*padding-top: 300%;*/
+	/*padding-left: 350%;*/
+
+	/*margin-left: -20px!important;*/
+	/*margin-top: -120%;*/
+  opacity: 0;
+  transition: all 0.8s
+}
+
+.btn-agregar:active:after {
+  padding: 0;
+	margin-top: 1.5em;
+  opacity: 1;
+  transition: 0s
+}
+
+.btn-agregar:disabled {
+ background: gray;
+}
+
+
+.btn-mas {
+	border-style: none;
+	border-width: 0px;
+	background-color: white;
+}
+
+.btn-menos {
+	border-style: none;
+	border-width: 0px;	
+	background-color: white;
+}
+
+.badge-precio-mas {
+	background-color: #382020;
+	color: white;
+}
+
+h2 {
+	font-weight: bold;
+	color: #b33030;
+}
+
+h5 {
+	padding-top: 0.5em;
+	color: #b33030;
+	border-bottom-width: 1px;
+	border: none;
+	border-bottom: ridge;
+	border-color: crimson;	
+}

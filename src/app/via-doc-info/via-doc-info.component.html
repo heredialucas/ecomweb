@@ -1,0 +1,94 @@
+<div class="Tit">
+	<div class="d-flex flex-row align-items-md-center">
+		<button class="btn btn-outline-secondary mr-1 BusqBoton">
+			<fa-icon 
+				class="TituloIconoIzquierda align-items-end align-content-center align-self-center" 
+				[routerLink]="['/Viajante',this.oDoc.id]"
+				[icon]="['fas', 'arrow-left']">
+			</fa-icon>
+		</button>
+		<h2 class="flex-fill">Documentos</h2>
+	</div>
+</div>
+
+<!-- Cliente y Documento info-->
+<div class="list-group">
+  <div class="list-group-item">
+		<span class="badge badge-pill badge-primary">Código: {{this.oDoc.cliCodigo}}</span>
+		<h3>{{this.oDoc.cliente}}</h3>
+	</div>
+	<!--
+	<hr class="estilo1">
+	-->
+	<div class="d-inline-flex mt-2">
+		<!-- Fecha -->
+		<div class="d-inline btn-link mr-1" style="font-size:2.5rem">
+			<fa-layers>
+				<fa-icon [icon]="['far', 'calendar']"></fa-icon>
+				<fa-layers-text content={{this.oDoc.fecha.getDate()}} style="color: rgb(3, 41, 146);font-size:1rem;font-weight: bold"></fa-layers-text>
+				<fa-layers-text content={{this.oDoc.obtDocMes()}} style="color: red;font-size:0.5rem; font-weight: bold" transform="down-22"></fa-layers-text>
+			</fa-layers>
+		</div>
+		<!-- Montos-->
+		<div class="d-inline flex-fill"  style="font-size:1rem;padding-right: 3px;">
+			<div class="d-block">
+				<span class="badge badge-pill badge-primary">{{this.oDoc.obtNumeracion()}}</span>
+			</div>
+			<div class="progress" style="height:0.2rem; background-color: rgb(206, 77, 77);">
+				<div class="progress-bar" role="progressbar" [style.width]= "this.oDoc.obtPorcionPago()"></div>
+			</div>
+			<div class="d-block">
+				Total: ${{this.oDoc.total  | number :"1.2-2"}} - Saldo: ${{this.oDoc.saldo | number :"1.2-2"}}
+			</div>
+		</div>
+	</div>
+	<ul class="cebra list-group">
+		<div class="list-group-item d-sm-inline-flex d-inline-flex align-items-center p-1"
+		*ngFor="let iDet of this.oDoc.aDetalle"
+		>
+			<div class="d-flex flex-column flex-fill">
+				<div><span class="badge badge-primary">{{iDet.codigo}}</span></div>
+				<div>{{iDet.detalle}}</div>
+				<div><span class="badge badge-primary">x{{iDet.cantidad}} unid.</span></div>
+			</div>
+			<div>
+				$ {{iDet.importe | number :"1.2-2"}}
+			</div>
+		</div>
+	</ul>
+	<h5>Otros documentos del Cliente</h5>
+	<div *ngIf="this.docListando || this.docListaMensaje > ''">
+		<span>{{this.docListaMensaje}}</span>
+		<fa-icon *ngIf="this.docListando" [icon]="['fas', 'spinner']" [spin]=true></fa-icon>
+	</div>
+
+	<ul class="cebra list-group list-group-flush">
+		<li class="list-group-item d-inline-flex d-xl-flex align-items-center align-items-xl-center p-0" *ngFor="let iDoc of this.aDoc">
+			<!-- Fecha -->
+			<div class="d-inline btn-link mr-1" style="font-size:2.5rem" (click)="this.verDocDetalle(iDoc.id)">
+				<fa-layers>
+					<fa-icon [icon]="['far', 'calendar']"></fa-icon>
+					<fa-layers-text content={{iDoc.fecha.getDate()}} style="color: rgb(3, 41, 146);font-size:1rem;font-weight: bold"></fa-layers-text>
+					<fa-layers-text content={{iDoc.obtDocMes()}} style="color: red;font-size:0.5rem; font-weight: bold" transform="down-22"></fa-layers-text>
+				</fa-layers>
+			</div>
+			<!-- Clientes y Montos-->
+			<div class="d-inline flex-fill"  style="font-size:1rem;padding-right: 3px;">
+				<div class="d-block">
+					<span class="badge badge-pill badge-primary">{{iDoc.obtNumeracion()}}</span>
+				</div>
+				<!--
+				<div class="d-block border-bottom">Cliente - {{iDoc.cliente}}</div>
+				-->
+				<div class="progress" style="height:0.2rem; background-color: rgb(206, 77, 77);">
+					<div class="progress-bar" role="progressbar" [style.width]= "iDoc.obtPorcionPago()"></div>
+				</div>
+				<div class="d-block">
+					Total: ${{iDoc.total  | number :"1.2-2"}} - Saldo: ${{iDoc.saldo | number :"1.2-2"}}
+				</div>
+			</div>
+		</li>
+	</ul>
+</div>
+
+<div>

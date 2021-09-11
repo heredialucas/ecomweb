@@ -1,0 +1,38 @@
+.cebra .list-group-item:nth-child(odd) {
+  background: white;
+}
+
+.cebra .list-group-item:nth-child(even) {
+  background: #ffe5e6;
+}
+
+.form-control {
+	border-radius: 1rem;
+	border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+
+.Codigo {
+	background-color:#343a40;
+	color: white;
+}
+
+.Rubro {
+	background-color: #8b2429;
+	color: white;
+}
+
+.BotDetalle {
+	border-style: solid;
+	border-radius: 3em;
+	border-width: 1px;
+	/* line-height: 1em; */
+	font-size: 2em;
+	color: #8b2429;
+	padding-left: 0.27em;
+	padding-right: 0.27em;	
+}
+
+.BotDetalle a {
+	color: #8b2429;
+}

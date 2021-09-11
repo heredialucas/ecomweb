@@ -1,0 +1,73 @@
+<div class="Tit">
+  <div class="d-flex flex-row align-items-md-center pt-1">
+		<!--
+		<fa-icon class="TituloIcono TituloIconoAtras align-self-center" [icon]="['fas', 'arrow-left']"></fa-icon>
+		-->
+    <h1 class="flex-fill">Clientes</h1>
+		<button class="btn btn-accion mr-1 BusqBoton">
+			<fa-icon 
+					class="TitIconoDerecha align-items-end align-content-center align-self-center" 
+					[routerLink]="['/ClienteFiltro']"
+					[icon]="['fas', 'filter']">
+			</fa-icon>
+		</button>
+	</div>	
+	<!--Busqueda rápida-->
+	<form [formGroup]="frm" (ngSubmit)="this.busqRapida()">
+		<div class="input-group">
+			<button class="btn btn-accion mr-1 BusqBoton" type="submit">
+				<fa-icon [icon]="['fas', 'search']"></fa-icon> 
+			</button>
+			<input class="form-control BusqInput" type="text" formControlName="txtBusqueda">
+		</div>
+		<!--
+		<div *ngIf="this.cliListando || this.cliListaMensaje > ''">
+			<span>{{this.cliListaMensaje}}</span>
+			<fa-icon *ngIf="this.cliListando" [icon]="['fas', 'spinner']" [spin]=true></fa-icon>
+		</div>
+		-->
+	</form>
+</div>
+<div *ngIf="this.cliListando || this.cliListaMensaje > ''" class="BusqLeyenda">
+	<span>{{this.cliListaMensaje}}</span>
+	<fa-icon *ngIf="this.cliListando" [icon]="['fas', 'spinner']" [spin]=true></fa-icon>
+</div>
+
+<div *ngIf="this.esListaVacia()" >
+	<div class="d-flex justify-content-center mt-5 mb-3" style="opacity:0.8">
+		<img 
+			srcset="
+				/assets/img/LogoBlanco-320w.png 320w,
+				/assets/img/LogoBlanco-480w.png 480w,
+				/assets/img/LogoBlanco-800w.png 800w"
+			sizes="
+				(max-width: 320px) 280px,
+	 			(max-width: 480px) 440px,
+	 			800px"
+			src="/assets/img/LogoBlanco-800w.png"
+			width="80%" height="80%"
+		/>
+	</div>
+	<div class="d-flex flex-row bg-dark justify-content-around">
+		<a href="https://www.facebook.com/albylabruna" target="_blank"><fa-icon [icon]="['fab', 'facebook']" size="lg"></fa-icon></a>
+		<a href="https://twitter.com/albylabruna" target="_blank"><fa-icon [icon]="['fab', 'twitter']" size="lg"></fa-icon></a>
+		<a href="https://www.instagram.com/albylabruna/" target="_blank"><fa-icon [icon]="['fab', 'instagram']" size="lg"></fa-icon></a>
+	</div>
+</div>
+
+<!-- Lista de Clientes -->  
+<ul class="cebra list-group">
+  <div class="list-group-item d-inline-flex justify-content-start align-items-center"
+  *ngFor="let item of this.cliLista"
+  >
+    <div class="float-left flex-fill">
+      <span class="badge Codigo">{{item.codigo}}</span>
+      <h6>{{item.nombre}}</h6>
+		</div>
+		<span class="BotDetalle">
+				<a [routerLink]="['/Cliente',item.id]">
+				<fa-icon [icon]="['fas', 'ellipsis-h']"></fa-icon>
+			</a>
+		</span>
+  </div>
+</ul>

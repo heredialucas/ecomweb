@@ -1,0 +1,17 @@
+.art-tit-ps {
+    display: block;
+    background-color: #3382c7;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.art-tit-ps span {
+      padding: 0.2rem 0.2rem;
+      text-align: center;
+    }
+.art-tit-ps fa-icon {
+      background-color: #306fa5;
+      padding: 0.2rem 0.2rem;
+      text-align: left;
+      font-size: 0.8rem;
+    }

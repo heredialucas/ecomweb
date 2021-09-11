@@ -1,0 +1,11 @@
+- Pedido: Asignar cliente sobre pedido cerrado, mandar mensaje, indicar que puede crear una nuevo pedido.
+listo
+
+- Pedido: Asignar cliente: si el pedido ya tiene cliente, advertir, si confirma sobreescrbir
+listo
+
+- Guardar Pedido: dialogo informando si el pedido realmente se guardó, hacer notorio que el pedido "NO" se guardó.
+- Guardar Pedido: brindar detalles del motivo por el cual no se guarda.
+- Mantener un copia del pedido que se está editando solo si el pedido no está registrado en la DB, para de esa manera poder recuperarlo en caso de cierre del navegador.
+- Buscar pedido, mostrar avance de la búsqueda
+- Levantar pedido, mostra avance.

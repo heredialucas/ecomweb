@@ -1,0 +1,37 @@
+<div class="Tit">
+	<div class="d-flex flex-row align-items-md-center pt-1">
+		<button class="btn btn-outline-secondary mr-1 BusqBoton">
+			<fa-icon 
+				class="TituloIconoIzquierda align-items-end align-content-center align-self-center" 
+				[routerLink]="['/Clientes']"
+				[icon]="['fas', 'arrow-left']">
+			</fa-icon>
+		</button>
+		<h2 class="flex-fill">Clientes - Filtro</h2>
+	</div>
+</div>
+
+<form class="card-body" [formGroup]="frm" (ngSubmit)="onFiltrar()">
+	<!-- Codigo -->
+	<div class="form-group">
+		<input type="txt" class="form-control" placeholder="Codigo" formControlName="txtCodigo">
+	</div>
+	<!-- Nombre -->
+	<div class="form-group">
+		<input type="txt" class="form-control" placeholder="Nombre" formControlName="txtNombre">
+	</div>
+	<!-- Domicilio -->
+	<div class="form-group">
+		<input type="txt" class="form-control" placeholder="Domicilio" formControlName="txtDomicilio">
+	</div>
+
+	<div 
+		class="d-flex justify-content-around align-items-center" 
+		style="background-color: #0051ba;padding-top: 5px;padding-right: 0px;padding-bottom: 3px;margin-top: 15px;">
+		<button class="btn btn-outline-light d-flex justify-content-between align-items-center" type="submit" [disabled]="!frm.valid">
+			Filtrar</button>
+		<button class="btn btn-outline-light d-flex align-items-center" type="button" [routerLink]="['/Clientes']">
+			Cancelar</button>
+	</div>
+
+</form>

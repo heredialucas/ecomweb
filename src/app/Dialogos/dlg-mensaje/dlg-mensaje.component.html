@@ -1,0 +1,20 @@
+<div class="d-flex justify-content-start align-items-center mb-2" mat-dialog-title>
+	<!--
+	<fa-icon [icon]="['fas', 'times-circle']" style="color:red;font-size: 2rem;margin-right: 0.6rem;"></fa-icon>
+	-->
+	<fa-icon *ngIf="this.titGrafico==0" [icon]="this.aTitGrafico[0]" style="color:red;font-size: 2rem;margin-right: 0.6rem;"></fa-icon>
+	<fa-icon *ngIf="this.titGrafico==1" [icon]="this.aTitGrafico[1]" style="color:rgb(59, 149, 233);font-size: 2rem;margin-right: 0.6rem;"></fa-icon>
+	<!--
+	<fa-layers style="font-size:3rem; margin-right: 0.3rem;">
+		<fa-icon [icon]="['far', 'save']" style="color:blue" transform="shrink-7"></fa-icon>
+		<fa-icon [icon]="['fas', 'ban']" style="color:red"></fa-icon>
+	</fa-layers>	
+	-->
+	<div>{{this.titTexto}}</div>
+</div>
+<mat-dialog-content>
+	{{this.mensaje}}	
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-end mr-3">
+	<button mat-button [mat-dialog-close]="true">{{this.botRotulo}}</button>
+</mat-dialog-actions>

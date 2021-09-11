@@ -1,0 +1,231 @@
+<div class="Tit">
+	<div>
+		<span class="badge badge-pill badge-codigo">Código: {{this.cli.codigo}}</span>
+		<h3>{{this.cli.nombre}}</h3>	
+	</div>
+	<button class="btn btn-accion m-1" 
+		type="button" 
+		*ngIf="this.esViajante()" 
+		[disabled]="!this.esPedidoAbierto() || !this.traCli.estaPreparado() || cli.id==''" 
+		(click)="this.agrAPedido()">
+		{{(this.esPedidoAbierto() ? 'Asignar Pedido' : 'Pedido Cerrado!!!')}}
+	</button>
+	<div *ngIf="this.traCli.esMostrable()">
+		<span>{{this.traCli.mensaje}}</span>
+		<fa-icon *ngIf="this.traCli.estaPreparando()" [icon]="['fas', 'spinner']" [spin]=true></fa-icon>
+	</div>
+</div>
+
+<!-- Tabs Títulos-->
+<ul class="nav nav-tabs  mt-1" id="myTab" role="tablist">
+	<li class="nav-item" role="presentation">
+		<a class="nav-link active" id="home-tab" data-toggle="tab" href="#masdatos" role="tab" aria-controls="datos" aria-selected="true">
+			{{ (this.esCliente() ? "Mis Datos" : "Datos")}}
+		</a>
+	</li>
+	<li class="nav-item" role="presentation">
+		<a class="nav-link" id="pedidos-tab" data-toggle="tab" href="#pedidos" role="tab" aria-controls="pedidos" aria-selected="false">Pedidos</a>
+	</li>
+	<li class="nav-item" role="presentation">
+		<a class="nav-link" id="visitas-tab" data-toggle="tab" href="#visitas" role="tab" aria-controls="visitas" aria-selected="false">Visitas</a>
+	</li>
+</ul>
+
+<!-- Tabs Marco-->
+<div class="tab-content" id="tabCliente">
+	<!-- Mas Datos-->
+	<div class="tab-pane fade show active" id="masdatos" role="tabpanel" aria-labelledby="home-tab">
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item">
+				<fa-icon [icon]="['fas', 'home']" class="icono"></fa-icon>Domicilio: {{cli.domicilio}}
+			</li>
+		</ul>
+	</div>
+	<!-- Pedidos-->
+	<div class="tab-pane fade" id="pedidos" role="tabpanel" aria-labelledby="profile-tab">
+		<form [formGroup]="frm" (ngSubmit)="pedFiltrar()">
+			<a class="p-0 m-0" type="button" data-toggle="collapse" data-target="#colPedidoFiltro">
+				<fa-icon [icon]="['fas', 'angle-down']"></fa-icon>
+				Mostrar filtro
+			</a>
+			<span *ngIf="this.traPed.esMostrable()"> : {{this.traPed.mensaje}}</span>
+			<fa-icon *ngIf="this.traPed.estaPreparando()" [icon]="['fas', 'spinner']" [spin]=true></fa-icon>
+			<div id="colPedidoFiltro" class="collapse" >
+				<div class="input-group mb-1">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Periodo</span>
+					</div>
+					<input class="mr-1" style="width:30%;" 
+						#fechaDesde formControlName="txtDesde" 
+						[dpDayPicker]="this.dayPickerConfig" 
+						[displayDate]="this.obtFiltroDesde()"
+						[theme]="'dp-material'"/> 
+					<input style="width:30%;" 
+						#fechaHasta formControlName="txtHasta" 
+						[dpDayPicker]="dayPickerConfig" 
+						[displayDate]="this.obtFiltroHasta()"
+						[theme]="'dp-material'"/> 
+				</div>
+				<div class="input-group mb-1">
+					<div class="input-group-prepend">
+						<span class="input-group-text" for="gruEstado">Estado</span>
+					</div>
+					<!--							<select class="custom-select" id="gruEstado"> -->
+					<select id="gruEstado" formControlName="txtEstado">
+						<option value="-1" selected>Cualquier estado</option>
+						<option value="0">Abierto (en confección)</option>
+						<option value="1">Enviado</option>
+					</select>
+				</div>
+				<!--
+				<button class="p-0 ml-2 border-0" type="submit"><fa-icon [icon]="['fas', 'check']" data-toggle="collapse" data-target="#collapseFiltro"></fa-icon></button>
+				-->
+				<button 
+					class="btn btn-accion mt-1 mr-2" 
+					type="submit" 
+					data-toggle="collapse" data-target="#colPedidoFiltro" 
+					>
+					Filtrar
+				</button>
+				<button 
+					class="btn btn-accion mt-1 mr-2" 
+					type="button" 
+					data-toggle="collapse" data-target="#colPedidoFiltro" 
+					>
+					Cancelar
+				</button>
+			</div>
+		</form>
+
+		<!-- Pedidos: Resultado del Filtro -->
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item d-inline-flex d-xl-flex align-items-center align-items-xl-center p-0" *ngFor="let iPed of this.pedLista">
+				<div class="d-inline btn-link mr-1" style="font-size:2.5rem" (click)="this.pedCargar(iPed.id)">
+					<fa-layers>
+						<fa-icon [icon]="['far', 'calendar']"></fa-icon>
+						<fa-layers-text content={{iPed.fecha.getDate()}} style="color: rgb(3, 41, 146);font-size:1rem;font-weight: bold"></fa-layers-text>
+						<fa-layers-text content={{iPed.obtPedidoMes()}} style="color: red;font-size:0.5rem; font-weight: bold" transform="down-22"></fa-layers-text>
+					</fa-layers>
+				</div>
+				<div class="d-inline flex-fill"  style="font-size:1rem;overflow:hidden;">
+					<div>
+						<div class="d-inline border-bottom shadow-sm bg-white">Código - {{iPed.cliente}}</div>
+					</div>
+					<div class="d-inline"> 
+						{{iPed.articulos}} Arts - ${{iPed.monto | number :"1.2-2"}}
+					</div>
+				</div>
+				<div class="d-inline" style="width:20%">
+					<span class="badge badge-pill badge-primary">{{iPed.id}}
+					<fa-icon 
+						[icon]="iPed.estado==0 ? ['fas','pencil-alt'] : ['fas','paper-plane']">
+					</fa-icon>
+					</span>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<!-- Visitas -->
+	<div class="tab-pane fade" id="visitas" role="tabpanel">
+		<!-- Desplegar -->
+		<a #conFilLeyenda class="p-0 m-0" type="button" data-toggle="collapse" data-target="#colVisitaFiltro" (click)="this.visGeolocalizar()">
+			<fa-icon [icon]="['fas', 'angle-down']"></fa-icon>
+			Gestionar
+			<span *ngIf="this.traVis.esMostrable()"> : {{this.traVis.mensaje}}</span>
+			<fa-icon *ngIf="this.traVis.estaPreparando()" [icon]="['fas', 'spinner']" [spin]=true></fa-icon>
+		</a>
+		<!-- Nueva/Filtro-->
+		<div class="collapse" id="colVisitaFiltro">
+			<ul class="nav nav-pills mb-1" id="visTab" role="tablist">
+				<li class="nav-item" role="presentation">
+					<a class="nav-link" role="tab" data-toggle="tab" href="#visNueva">Nueva</a>
+				</li>
+				<li class="nav-item" role="presentation">
+					<a class="nav-link" role="tab" data-toggle="tab" href="#visFiltro">Filtro</a>
+				</li>
+			</ul>
+			<div class="tab-content active" id="divVisitaTabs">
+				<form [formGroup]="frmVisita" 
+					class="tab-pane fade" id="visNueva" role="tabpanel"
+					(ngSubmit)="visRegistrar()"
+					>
+					<div>
+						<span class="badge badge-pill badge-primary">
+							<fa-icon 
+								[icon]="['fas','map-marker']" [spin]="this.traGeo.estaPreparando()">
+							</fa-icon>
+							{{this.traGeo.mensaje}}
+						</span>
+						<textarea class="form-control" rows="2" formControlName="txtObservacion" placeholder="Observación"></textarea>
+					</div>
+					<button 
+						class="btn btn-accion mt-1 mr-2" 
+						type="submit" 
+						data-toggle="collapse" data-target="#colVisitaFiltro" 
+						>
+						Registrar
+					</button>
+					<button 
+						class="btn btn-accion mt-1 mr-2" 
+						type="button" 
+						data-toggle="collapse" data-target="#colVisitaFiltro" 
+						>
+						Cancelar
+					</button>
+				</form>
+				<form
+					id="visFiltro" role="tabpanel"
+					[formGroup]="frmVisFiltro" 
+					class="tab-pane fade show active"
+					(ngSubmit)="visFiltrar()"
+					>				
+					<div class="input-group mb-1">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Periodo</span>
+						</div>
+						<input class="mr-1" style="width:30%;" 
+							#fechaVisDesde formControlName="txtVisDesde" 
+							[dpDayPicker]="this.dayPickerConfig" 
+							[displayDate]="this.obtFiltroDesde()"
+							[theme]="'dp-material'"/> 
+						<input style="width:30%;" 
+							#fechaVisHasta formControlName="txtVisHasta" 
+							[dpDayPicker]="dayPickerConfig" 
+							[displayDate]="this.obtFiltroHasta()"
+							[theme]="'dp-material'"/> 
+					</div>
+					<button 
+						class="btn btn-accion mt-1 mr-2" 
+						type="submit" 
+						data-toggle="collapse" data-target="#colVisitaFiltro" 
+						>
+						Filtrar
+					</button>
+					<button 
+						class="btn btn-accion mt-1 mr-2" 
+						type="button" 
+						data-toggle="collapse" data-target="#colVisitaFiltro" 
+						>
+						Cancelar
+					</button>
+				</form>
+			</div>		
+		</div>
+		<!-- Listado de Visitas -->
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item d-inline-flex d-xl-flex align-items-center align-items-xl-center p-0" *ngFor="let iVis of this.visLista">
+				<div class="d-inline btn-link mr-1" style="font-size:2.5rem">
+					<fa-layers>
+						<fa-icon [icon]="['far', 'calendar']"></fa-icon>
+						<fa-layers-text content={{iVis.obtDia()}} style="color: rgb(3, 41, 146);font-size:1rem;font-weight: bold"></fa-layers-text>
+						<fa-layers-text content={{iVis.obtMes()}} style="color: red;font-size:0.5rem; font-weight: bold" transform="down-22"></fa-layers-text>
+					</fa-layers>
+				</div>
+				<div class="d-inline flex-fill"  style="font-size:1rem;overflow:hidden;">
+					{{iVis.observacion}}
+				</div>
+			</li>
+		</ul>
+	</div>
+
+</div>

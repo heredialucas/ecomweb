@@ -1,0 +1,53 @@
+<div class="d-flex flex-column justify-content-center" style="background-color: black;">
+<form class="d-flex flex-column justify-content-center align-items-center align-content-center align-self-center ses-frm" [formGroup]="frm" (ngSubmit)="this.iniSesion()">
+	<!--
+	<img class="d-block justify-content-center" src="/assets/img/SesionLogo.jpg" width="200px" height="100px" />
+	-->
+	<img class="mt-4 mb-4"
+		srcset="
+			/assets/img/LogoBlanco-320w.png 320w,
+			/assets/img/LogoBlanco-480w.png 480w,
+			/assets/img/LogoBlanco-800w.png 800w"
+		sizes="
+			(max-width: 320px) 280px,
+			(max-width: 480px) 440px,
+			800px"
+		width="60%" height="60%"
+		src="/assets/img/LogoBlanco-800w.png"
+	/>
+
+	<div class="d-flex flex-row align-items-center align-content-center align-self-center">
+		<img class="d-block justify-content-center" src="/assets/img/SesionLogoBarraIzq.jpg" width="81px" height="29px" />
+		<div style="width: 100%;">
+			<label>Usuario</label>
+			<input class="form-control" type="text" placeholder="" formControlName="usuario" />
+			<label>Contraseña</label>
+			<input class="form-control" type="password" placeholder="" formControlName="clave" />	
+		</div>
+		<img class="d-block justify-content-center" src="/assets/img/SesionLogoBarraDer.jpg" width="81px" height="29px" 
+		/>
+	</div>
+	<button class="btn" type="submit" [disabled]='!this.frm.valid'>
+		<span class="spinner-border spinner-border-sm" role="status" *ngIf="this.bCargando"></span>
+		{{(this.bCargando ? "Iniciando..." : "Iniciar Sesión")}}
+	</button>
+	<div class="input-group" *ngIf="this.iIntentos>0 || this.bError">
+		<span>{{this.obtMensaje()}}</span>
+	</div>
+
+
+
+<!--
+	<img class="d-block justify-content-center" src="/assets/img/InicioSesion-xs.png" width="200px" height="138px" />
+	<input class="border rounded border-primary form-control" type="text" placeholder="Usuario" formControlName="usuario" />
+	<input class="border rounded border-primary form-control" type="password" placeholder="Contraseña" formControlName="clave" />
+	<button class="btn btn-primary" type="submit" [disabled]='!this.frm.valid'>
+		<span class="spinner-border spinner-border-sm" role="status" *ngIf="this.bCargando"></span>
+		{{(this.bCargando ? "Iniciando..." : "Iniciar Sesión")}}
+	</button>
+	<div class="input-group" *ngIf="this.iIntentos>0 || this.bError">
+		<span>{{this.obtMensaje()}}</span>
+	</div>
+-->
+</form>
+</div>

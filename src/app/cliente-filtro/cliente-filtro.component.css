@@ -1,0 +1,29 @@
+
+.Titulo {
+  background-color: #3244a2;
+}
+
+.TituloIcono {
+  line-height: 40px;
+  color: rgb(255,255,255);
+  font-weight: bold;
+  font-size: 28px;
+}
+
+.Titulo h1 {
+  color: rgb(213,224,255)
+}
+
+.TituloIconoAtras {
+  padding: 0px 5px;
+}
+
+.TituloIconoFiltro {
+  padding-right: 5px;
+}
+
+.ListaItemIconoAgregar {
+  line-height: 40px;
+  font-size: 32px;
+  color: rgb(20,123,198);
+}

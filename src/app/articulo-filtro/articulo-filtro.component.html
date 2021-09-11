@@ -1,0 +1,65 @@
+<div class="Tit">
+	<div class="d-flex flex-row align-items-md-center">
+		<button class="btn btn-outline-secondary mr-1 BusqBoton">
+			<fa-icon 
+				class="TituloIconoIzquierda align-items-end align-content-center align-self-center" 
+				[routerLink]="['/Articulos']"
+				[icon]="['fas', 'arrow-left']">
+			</fa-icon>
+		</button>
+		<h2 class="flex-fill">Artículos - Filtro</h2>
+	</div>
+</div>
+
+<form class="card-body" [formGroup]="frm" (ngSubmit)="onFiltrar()">
+	<!-- Rubro -->
+	<div class="form-group">
+		<input type="txt" class="form-control" placeholder="Rubro" formControlName="txtRubro">
+	</div>
+	<!-- Subrubro -->
+	<div class="form-group">
+		<input type="txt" class="form-control" placeholder="Subrubro" formControlName="txtSubRubro">
+	</div>
+	<!-- Descripcion -->
+	<div class="form-group">
+		<input type="txt" class="form-control" placeholder="Descripción" formControlName="txtDescrip">
+	</div>
+	<!-- Código -->
+	<div class="form-group mb-2">
+		<input type="txt" class="form-control" placeholder="Código" formControlName="txtCodigo">
+	</div>
+
+	<!-- Rubro-->
+	<!-- Muestra para combo
+	<div class="form-group">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<button class="btn btn-outline-secondary dropdown-toggle" 
+					type="button" 
+					data-toggle="dropdown" 
+					aria-haspopup="true" aria-expanded="false">
+					Rubro
+				</button>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="#">Rubro1</a>
+					<a class="dropdown-item" href="#">Rubro2</a>
+					<a class="dropdown-item" href="#">Rubro3</a>
+					<a class="dropdown-item" href="#">Rubro4</a>
+					<a class="dropdown-item" href="#">Rubro1</a>
+					<a class="dropdown-item" href="#">Rubro2</a>
+					<a class="dropdown-item" href="#">Rubro3</a>
+				</div>
+			</div>
+			<input type="text" class="form-control" formControlName="txtRubro">
+		</div>
+	</div>
+	-->
+
+	<div class="d-flex justify-content-around align-items-center" style="background-color: #0051ba;padding-top: 5px;padding-right: 0px;padding-bottom: 3px;margin-top: 15px;">
+		<button class="btn btn-outline-light d-flex justify-content-between align-items-center" type="submit" [disabled]="!frm.valid">
+			Filtrar</button>
+		<button class="btn btn-outline-light d-flex align-items-center" type="button" [routerLink]="['/Articulos']">
+			Cancelar</button>
+	</div>
+
+</form>

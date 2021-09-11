@@ -1,0 +1,181 @@
+<!-- Toolbar -->
+<div class="container px-0">
+	<nav class="navbar navbar-expand-lg navbar-light barra">
+		<button class="navbar-toggler boton-barra" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<!--
+			<span class="navbar-toggler-icon p-1 boton-barra"></span>
+			-->
+			<fa-icon [icon]="['fas', 'bars']" class="boton-barra"></fa-icon>
+		</button>
+		<!-- Enlaces rápidos-->
+		<!--Inicio de Sesión: Solo si es invitado-->
+		<button 
+			class="navbar-toggler boton-barra" 
+			type="button"
+			*ngIf="this.esInvitado()" [routerLink]="['/Sesion']"
+			data-target="#navbarSupportedContent" 
+			aria-controls="navbarSupportedContent" 
+			aria-expanded="false" 
+			aria-label="Toggle navigation">
+			<fa-icon [icon]="['fas', 'unlock']" color="white"></fa-icon>
+		</button>
+		<!--Cliente - Mis datos: Solo si es Cliente-->
+		<button 
+			class="navbar-toggler boton-barra" 
+			type="button"
+			*ngIf="this.esCliente()" [routerLink]="['/Cliente',this.obtPedidoCliente()]"
+			data-target="#navbarSupportedContent" 
+			aria-controls="navbarSupportedContent" 
+			aria-expanded="false" 
+			aria-label="Toggle navigation">
+			<fa-icon [icon]="['fas', 'user']"></fa-icon>
+		</button>
+		<!--Viajante - Area de viajante-->
+		<button 
+			class="navbar-toggler boton-barra" 
+			type="button"
+			*ngIf="this.esViajante()" [routerLink]="['/Viajante']"
+			data-target="#navbarSupportedContent" 
+			aria-controls="navbarSupportedContent" 
+			aria-expanded="false" 
+			aria-label="Toggle navigation">	
+			<fa-icon [icon]="['fas', 'suitcase']"></fa-icon>
+		</button>
+		<!--Viajante - Area de viajante-->
+		<button 
+			class="navbar-toggler boton-barra" 
+			type="button"
+			*ngIf="this.esGestion()" [routerLink]="['/Gestion']"
+			data-target="#navbarSupportedContent" 
+			aria-controls="navbarSupportedContent" 
+			aria-expanded="false" 
+			aria-label="Toggle navigation">	
+			<fa-icon [icon]="['fas', 'truck-loading']"></fa-icon>
+		</button>
+
+		<!--Clientes - Listado: Solo si es Viajante-->
+		<button 
+			class="navbar-toggler boton-barra" 
+			type="button"
+			*ngIf="this.esViajante()" [routerLink]="['/Clientes']"
+			data-target="#navbarSupportedContent" 
+			aria-controls="navbarSupportedContent" 
+			aria-expanded="false" 
+			aria-label="Toggle navigation">
+			<fa-icon [icon]="['fas', 'users']"></fa-icon>
+		</button>
+		<!-- Artículos -->
+		<button 
+			class="navbar-toggler boton-barra" 
+			type="button"
+			*ngIf="!this.esInvitado()" [routerLink]="['/Articulos']"
+			data-target="#navbarSupportedContent" 
+			aria-controls="navbarSupportedContent" 
+			aria-expanded="false" 
+			aria-label="Toggle navigation">
+			<fa-icon [icon]="['fas', 'list-alt']"></fa-icon>
+		</button>
+		<!-- Pedido -->
+		<button 
+			class="navbar-toggler boton-barra" 
+			type="button"
+			*ngIf="!this.esInvitado()" [routerLink]="['/Pedido']"
+			data-target="#navbarSupportedContent" 
+			aria-controls="navbarSupportedContent" 
+			aria-expanded="false" 
+			aria-label="Toggle navigation">
+			<fa-icon [icon]="['fas', 'dolly']"></fa-icon>
+		</button>
+		<!-- Cerrar Sesión -->
+		<button 
+			class="navbar-toggler boton-barra" 
+			type="button"
+			*ngIf="!this.esInvitado()"
+			(click)="this.finSesion()"
+			data-target="#navbarSupportedContent" 
+			aria-controls="navbarSupportedContent" 
+			aria-expanded="false" 
+			aria-label="Toggle navigation"			
+			>
+			<fa-icon [icon]="['fas', 'sign-out-alt']"></fa-icon>
+		</button>		
+
+		<!--
+		<a class="navbar-brand" href="#">Al by La Bruna</a>
+		-->
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<!--Inicio de Sesión-->
+				<li class="nav-item mr-1" *ngIf="this.esInvitado()">
+					<a class="nav-link"  [routerLink]="['/Sesion']" data-toggle="collapse" data-target=".navbar-collapse.show">
+						<fa-icon [icon]="['fas', 'unlock']"></fa-icon>
+						Iniciar Sesión
+					</a>
+				</li>
+				<!--Cliente: Area de Cliente -->
+				<li  class="nav-item mr-1 dropdown boton-barra" role="group" *ngIf="this.esCliente()">
+					<a class="nav-link dropdown-toggle" id="navbarDropSesionCli" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<fa-icon [icon]="['fas', 'user']"></fa-icon>
+						Cliente
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropSesionCli">
+						<a class="dropdown-item" [routerLink]="['/Cliente',this.obtPedidoCliente()]" data-toggle="collapse" data-target=".navbar-collapse.show">Area Cliente</a>
+						<a class="dropdown-item" (click)="this.finSesion()" data-toggle="collapse" data-target=".navbar-collapse.show">Cerrar Sesión</a>
+					</div>
+				</li>
+				<!--Viajante: Area Viajante -->
+				<div class="nav-item mr-1 dropdown" role="group" *ngIf="this.esViajante()">
+					<a class="nav-link dropdown-toggle" id="navbarDropSesionVia" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<fa-icon [icon]="['fas', 'user']"></fa-icon>
+						Viajante
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropSesionVia">
+						<li class="dropdown-item" [routerLink]="['/Viajante']" data-toggle="collapse" data-target=".navbar-collapse.show">Area Viajante</li>
+						<li class="dropdown-item" (click)="this.finSesion()" data-toggle="collapse" data-target=".navbar-collapse.show">Cerrar Sesión</li>
+					</div>
+				</div>
+				<!--Viajante: Area Gestion -->
+				<div class="nav-item mr-1 dropdown" role="group" *ngIf="this.esGestion()">
+					<a class="nav-link dropdown-toggle" id="navbarDropSesionVia" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<fa-icon [icon]="['fas', 'user']"></fa-icon>
+						Gestión
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropSesionVia">
+						<li class="dropdown-item" [routerLink]="['/Gestion']" data-toggle="collapse" data-target=".navbar-collapse.show">Gestión</li>
+						<li class="dropdown-item" (click)="this.finSesion()" data-toggle="collapse" data-target=".navbar-collapse.show">Cerrar Sesión</li>
+					</div>
+				</div>
+				<!--Clientes-->
+				<li class="nav-item mr-1" *ngIf="this.esViajante()" data-toggle="collapse" data-target=".navbar-collapse.show">
+					<a class="nav-link" [routerLink]="['/Clientes']">
+						<fa-icon [icon]="['fas', 'users']"></fa-icon>
+						Clientes
+					</a>
+				</li>
+				<li class="nav-item mr-1">
+					<!--Catálogo de artículos-->
+					<a class="nav-link" *ngIf="!this.esInvitado()" [routerLink]="['/Articulos']" data-toggle="collapse" data-target=".navbar-collapse.show">
+						<fa-icon [icon]="['fas', 'list-alt']"></fa-icon>
+						Artículos
+					</a>
+				</li>
+				<li class="nav-item mr-1">
+					<!--Solicitud de Pedido-->
+					<a class="nav-link" *ngIf="!this.esInvitado()" [routerLink]="['/Pedido']" data-toggle="collapse" data-target=".navbar-collapse.show">
+						<fa-icon [icon]="['fas', 'dolly']"></fa-icon>
+						Pedido
+					</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav">
+				<li class="nav-item" *ngIf="!this.esInvitado()">
+					<a class="nav-link" (click)="this.finSesion()" data-toggle="collapse" data-target=".navbar-collapse.show">
+						<fa-icon [icon]="['fas', 'sign-out-alt']"></fa-icon>
+						Salir
+					</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<router-outlet></router-outlet>
+</div>
