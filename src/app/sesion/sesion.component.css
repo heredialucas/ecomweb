@@ -2,6 +2,18 @@ img{
 	flex-shrink:2;
 	margin-top:15%;
 }
+.artLista{
+	display:flex;
+	height:100vh;
+	flex-direction:column;
+	justify-content:space-between;
+}
+.artLista--div {
+	background-color: #8b2429;
+}
+.artLista div a {
+	color:white;
+}
 
 .ses-frm {
 	margin: 0px;
