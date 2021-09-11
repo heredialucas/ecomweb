@@ -1,11 +1,12 @@
-body {
-	background-color: black;
+img{
+	flex-shrink:2;
+	margin-top:15%;
 }
+
 .ses-frm {
 	margin: 0px;
-	max-width: 500px;
-	padding: 0px;
 	width: 100%;
+	padding: 0px;
 	background-color: black;
 }
 

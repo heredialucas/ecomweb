@@ -1,5 +1,10 @@
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
+body{
+	background:black;
+	padding:0px;
+	margin: 0px;
+}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
