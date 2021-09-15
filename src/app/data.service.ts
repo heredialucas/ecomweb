@@ -35,7 +35,7 @@ export class DataService {
 	//0: Invitado, 1: Cliente, 2: Viajante
 	private rol: number; 
 	// private rutaBase = 'http://localhost:8080/eComm';
-	private rutaBase = 'http://localhost/ecomerce/php'; // 'http://sd-1586933-h00004.ferozo.net';
+	private rutaBase = ''; // 'http://sd-1586933-h00004.ferozo.net';
 	//private rutaBase = '';
 
 	artFiltro: ArticuloFiltro;

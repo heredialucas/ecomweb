@@ -9,10 +9,12 @@
 
 # dependencies
 /node_modules
+/SqlServerData
+/Sincro
 /php
 /MySqlData
-/Sincro
-/SqlServerData
+/Diseño
+/e2e
 
 # profiling files
 chrome-profiler-events*.json

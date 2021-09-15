@@ -1,24 +1,10 @@
-img{
-	flex-shrink:2;
-	margin-top:15%;
+body {
+	background-color: black;
 }
-.artLista{
-	display:flex;
-	height:100vh;
-	flex-direction:column;
-	justify-content:space-between;
-}
-.artLista--div {
-	background-color: #8b2429;
-}
-.artLista div a {
-	color:white;
-}
-
 .ses-frm {
 	margin: 0px;
-	width: 100%;
 	padding: 0px;
+	width: 75%;
 	background-color: black;
 }
 
@@ -49,4 +35,19 @@ img{
 	background-color: red;
 	border-radius: 0.75rem;
 	color: white
+}
+@media (min-width:700px){
+	.ses-frm div div{
+		max-width: 500px;
+	}
+}
+@media (min-width:700px){
+	.ses-frm div img{
+		width:100%;
+	}
+}
+@media (max-width:699px){
+	.ses-frm div img{
+		width:15%;
+	}
 }
